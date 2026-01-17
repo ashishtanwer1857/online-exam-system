@@ -1,3 +1,4 @@
+import os
 from flask import Flask,redirect,request,url_for,flash,session,render_template
 from werkzeug.security import check_password_hash,generate_password_hash
 from models import Exam, User, Question, Result
@@ -12,6 +13,9 @@ app.secret_key="supersecretkey"
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 db.init_app(app)
+app.secret_key = os.environ.get("SECRET_KEY", "dev-key")
+with app.app_context():
+    db.create_all()
 @app.route("/")
 def homepage():
    if "user.id" in session:
