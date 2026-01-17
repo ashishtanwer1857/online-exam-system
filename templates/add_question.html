@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Add Question{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+
+    <h3 class="mb-3 text-center">
+      Add Question to "{{ exam.title }}"
+    </h3>
+
+    <form method="POST" class="card card-body shadow">
+
+      <div class="mb-3">
+        <label class="form-label">Question</label>
+        <textarea name="question_text" class="form-control" rows="3" required></textarea>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Option A</label>
+          <input type="text" name="option_a" class="form-control" required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Option B</label>
+          <input type="text" name="option_b" class="form-control" required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Option C</label>
+          <input type="text" name="option_c" class="form-control" required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Option D</label>
+          <input type="text" name="option_d" class="form-control" required>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Correct Option (A / B / C / D)</label>
+        <input type="text" name="correct_option" class="form-control" maxlength="1" required>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <button class="btn btn-success">Add Question</button>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}

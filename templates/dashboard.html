@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-3">Dashboard</h2>
+
+<div class="mb-3">
+  {% if user.role == "Teacher" %}
+    <a href="{{ url_for('add_exam') }}" class="btn btn-primary">
+      ➕ Add Exam
+    </a>
+  {% endif %}
+
+  <a href="{{ url_for('results') }}" class="btn btn-outline-secondary ms-2">
+    📊 My Results
+  </a>
+
+  <a href="{{ url_for('logout') }}" class="btn btn-danger float-end">
+    Logout
+  </a>
+</div>
+
+<hr>
+
+<h4>Available Exams</h4>
+
+{% if exams %}
+  <div class="list-group">
+    {% for exam in exams %}
+      <div class="list-group-item">
+        <h5 class="mb-1">{{ exam.title }}</h5>
+        <small>{{ exam.duration }} minutes</small><br>
+
+        <a href="{{ url_for('view_exam', exam_id=exam.id) }}" class="btn btn-sm btn-outline-primary mt-2">
+          View Exam
+        </a>
+
+        {% if user.role == "Teacher" %}
+          <a href="{{ url_for('add_question', exam_id=exam.id) }}" class="btn btn-sm btn-outline-success mt-2">
+            Add Question
+          </a>
+          <a href="{{ url_for('exam_results', exam_id=exam.id) }}" class="btn btn-sm btn-outline-dark mt-2">
+            View Results
+          </a>
+          
+  <form
+    action="{{ url_for('delete_exam', exam_id=exam.id) }}"
+    method="POST"
+    style="display:inline;"
+    onsubmit="return confirm('Are you sure you want to delete this exam?');"
+  >
+    <button class="btn btn-sm btn-outline-danger mt-2">
+      🗑 Delete Exam
+    </button>
+  </form>
+
+
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No exams available.</p>
+{% endif %}
+{% endblock %}
